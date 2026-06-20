@@ -105,6 +105,18 @@ html, body {
   font-weight: 500;
   border-bottom-right-radius: 4px;
 }
+.bubble.user.clickable {
+  cursor: pointer;
+  transition: filter 0.15s ease, box-shadow 0.15s ease;
+}
+.bubble.user.clickable:hover {
+  filter: brightness(1.08);
+}
+.bubble.user.active {
+  filter: brightness(1.12);
+  border: 1px solid #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
 .bubble.ai {
   align-self: flex-start;
   background: var(--bg-elev-2);
@@ -151,6 +163,14 @@ html, body {
 .btn:hover { opacity: .92; }
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--bg-elev-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+.btn-secondary:hover { opacity: 1; border-color: var(--accent); }
 
 /* ---------- Main panel ---------- */
 .main { flex: 1; overflow-y: auto; min-height: 0; padding: 24px 28px; }

@@ -1,6 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import UploadFile, File
 from app.graph import build_graph
 import pandas as pd
 
@@ -24,7 +23,10 @@ async def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 @app.post("/analyze")
-async def analyze(file: UploadFile = File(...), query: str = "Give me a summary of this dataset"):
+async def analyze(
+    file: UploadFile = File(...),
+    query: str = Form("Give me a summary of this dataset")
+):
     df = pd.read_csv(file.file)
     raw_data = df.to_json(orient='columns')
     graph = build_graph()

@@ -34,7 +34,12 @@ async def visualize_data(state: AnalystState) -> dict:
     if chart_type == 'histogram':
         fig = px.histogram(df, x=x, y=y, title=title)
     elif chart_type == 'bar':
-        fig = px.bar(df, x=x, y=y, title=title)
+        if y is None:
+            counts = df[x].value_counts().reset_index()
+            counts.columns = [x, 'count']
+            fig = px.bar(counts, x=x, y='count', title=title)
+        else:
+            fig = px.bar(df, x=x, y=y, title=title)
     elif chart_type == 'scatter':
         fig = px.scatter(df, x=x, y=y, title=title)
     elif chart_type == 'line':
@@ -45,7 +50,12 @@ async def visualize_data(state: AnalystState) -> dict:
         corr = df.select_dtypes(include="number").corr()
         fig = px.imshow(corr, title=title)
     elif chart_type == 'pie':
-        fig = px.pie(df, x=x, y=y, title=title)
+        if y is None:
+            counts = df[x].value_counts().reset_index()
+            counts.columns = [x, 'count']
+            fig = px.pie(counts, names=x, values='count', title=title)
+        else:
+            fig = px.pie(df, names=x, values=y, title=title)
     elif chart_type == 'treemap':
         fig = px.treemap(df, x=x, y=y, title=title)
     elif chart_type == 'funnel':

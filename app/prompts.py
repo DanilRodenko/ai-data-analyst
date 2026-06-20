@@ -1,5 +1,31 @@
 from langchain_core.prompts import ChatPromptTemplate
 
+ROUTER_PROMPT = ChatPromptTemplate.from_template(
+    """
+    You are a routing classifier for a data analysis system.
+    
+    User question: {query}
+    Available column types: {columns_meta}
+
+    Decide which agents should run to answer this question:
+    - "analyst": for statistical analysis, correlations, summaries, explanations, "why" questions
+    - "visualizer": for any request to see/show/plot/chart/graph/visualize data
+    - "forecaster": ONLY if user asks about prediction/forecast/future AND a datetime column exists
+
+    Rules:
+    - Most questions need ONLY ONE agent, not both
+    - If user just asks "show me X" or "plot Y" → visualizer ONLY
+    - If user asks "what is the correlation" or "explain" or "summarize" → analyst ONLY
+    - If user asks for both a chart AND explanation → both
+
+    Return ONLY a JSON array of agent names, nothing else.
+    Example: ["visualizer"]
+    Example: ["analyst"]
+    Example: ["analyst", "visualizer"]
+    """
+)
+
+
 ANALYST_PROMPT = ChatPromptTemplate.from_template(
     """
     You are an expert data analyst.
@@ -45,11 +71,16 @@ VISUALIZER_PROMPT = ChatPromptTemplate.from_template(
 
 SYNTHESIZER_PROMPT = ChatPromptTemplate.from_template(
     """
-    You are a data analyst.
-    User question: {query}
-    Insights: {insights}
-    Charts: {charts}
+    You are a data analyst answering a specific user question.
     
-    Provide a comprehensive summary based on the analysis.
+    User question: {query}
+    Analysis insights: {insights}
+    Charts generated: {charts}
+    
+    Answer the user's question directly in 2-4 sentences. 
+    Do NOT repeat the full dataset summary.
+    Do NOT list every column or statistic.
+    Just answer what was asked, referencing the chart if one was generated.
     """
 )
+

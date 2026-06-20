@@ -6,24 +6,18 @@ and forecasts — powered by a LangGraph orchestrated pipeline.
 
 ## Architecture
 
-         ┌─────────────┐
-  CSV →  │  profiler   │  (pandas: types, stats, missing values)
-         └──────┬──────┘
-                ↓
-         ┌─────────────┐
-         │   router    │  (LLM classifies query → which agents to run)
-         └──────┬──────┘
-                ↓
-      ┌─────────┼─────────┐
-      ↓         ↓         ↓
-  ┌────────┐┌──────────┐┌────────────┐
-  │analyst ││visualizer││ forecaster │
-  └────┬───┘└────┬─────┘└─────┬──────┘
-       └─────────┼─────────────┘
-                  ↓
-          ┌──────────────┐
-          │ synthesizer  │  (concise answer to the user's question)
-          └──────────────┘
+```mermaid
+graph TD
+    A[CSV Upload] --> B[profiler]
+    B --> C[router]
+    C -->|LLM decides| D[analyst]
+    C -->|LLM decides| E[visualizer]
+    C -->|LLM decides| F[forecaster]
+    D --> G[synthesizer]
+    E --> G
+    F --> G
+    G --> H[Response to user]
+```
 
 ## Tech Stack
 

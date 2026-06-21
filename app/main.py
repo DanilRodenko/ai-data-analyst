@@ -27,7 +27,11 @@ async def analyze(
     file: UploadFile = File(...),
     query: str = Form("Give me a summary of this dataset")
 ):
-    df = pd.read_csv(file.file)
+    try:
+        df = pd.read_csv(file.file, encoding='utf-8')
+    except UnicodeDecodeError:
+        file.file.seek(0)
+        df = pd.read_csv(file.file, encoding='latin-1')
     raw_data = df.to_json(orient='columns')
     graph = build_graph()
     result = await graph.ainvoke({

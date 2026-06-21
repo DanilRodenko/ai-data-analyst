@@ -19,14 +19,33 @@ graph TD
     G --> H[Response to user]
 ```
 
-## Tech Stack
+## Demo
 
-- **Orchestration**: LangGraph (conditional fan-out routing)
-- **LLMs**: Groq (Llama 3.3 70B) for fast agents, Anthropic Claude for synthesis/visualization (better instruction-following)
-- **Backend**: FastAPI
-- **Visualization**: Plotly
-- **Frontend**: Vanilla HTML/CSS/JS (no framework)
-- **Tracing**: LangSmith
+### Auto-analysis on upload
+One click gives a full statistical breakdown of the dataset.
+
+![Dataset summary](./docs/screenshots/titanic_summary.png)
+
+### Natural language to chart
+The visualizer extracts column names directly from the question and picks the right chart type.
+
+![Bar chart from natural language](./docs/screenshots/titanic1.png)
+
+### Statistical analysis with correlation insights
+![Correlation factors ranked](./docs/screenshots/titanic2.png)
+
+### Real-world business data
+Tested on a 2,800-row sales dataset with dates, categories, and messy real-world formatting (non-UTF8 encoding, missing values).
+
+![Sales by product line](./docs/screenshots/sales1.png)
+![Correlation analysis on sales data](./docs/screenshots/sales2.png)
+![Country breakdown](./docs/screenshots/sales3.png)
+
+### Time-series forecasting (Prophet)
+When a datetime column is detected, the forecaster agent runs Prophet and returns a forward-looking chart.
+
+![Forecast chart](./docs/screenshots/airlines.png)
+![Historical trend line chart](./docs/screenshots/airlines2.png)
 
 ## Key Features
 
@@ -37,6 +56,15 @@ graph TD
 - **Auto-analysis**: one-click dataset summary on upload
 - **Dynamic charts**: visualizer extracts column names directly from natural 
   language and builds the appropriate Plotly chart type
+
+## Tech Stack
+
+- **Orchestration**: LangGraph (conditional fan-out routing)
+- **LLMs**: Groq (Llama 3.3 70B) for fast agents, Anthropic Claude for synthesis/visualization (better instruction-following)
+- **Backend**: FastAPI
+- **Visualization**: Plotly
+- **Frontend**: Vanilla HTML/CSS/JS (no framework)
+- **Tracing**: LangSmith
 
 ## Running locally
 

@@ -43,4 +43,9 @@ async def analyze(
         "insights": [],
         "route_to": []
     })
-    return result
+    return {
+        "messages": result["messages"],
+        "statistics": result["statistics"],
+        "charts": result["charts"],
+        "insights": result["insights"]
+    }

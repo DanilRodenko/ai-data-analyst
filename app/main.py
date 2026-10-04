@@ -1,8 +1,10 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.graph import build_graph
 import pandas as pd
 
+
+MAX_FILE_BYTES = 5 * 1024 * 1024  # 5 MB
 
 app = FastAPI(
     title="AI Data Analyst",
@@ -27,6 +29,8 @@ async def analyze(
     file: UploadFile = File(...),
     query: str = Form("Give me a summary of this dataset")
 ):
+    if file.size > MAX_FILE_BYTES:
+        raise HTTPException(status_code=413, detail="File is too large. Max size is 5 MB.")
     try:
         df = pd.read_csv(file.file, encoding='utf-8')
     except UnicodeDecodeError:

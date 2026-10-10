@@ -1,0 +1,28 @@
+# Name shown in the Actions tab and on the badge
+name: tests
+
+# Run on every push to any branch and on every pull request
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # Fresh Linux machine from GitHub for each run
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repo code onto the machine
+      - uses: actions/checkout@v4
+
+      # Same Python as local and Docker; cache pip to speed up next runs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # Runtime deps + pytest/httpx
+      - run: pip install -r requirements-dev.txt
+
+      # No .env here: tests must pass without any API keys
+      - run: python -m pytest -v

@@ -6,7 +6,7 @@ from langchain_core.output_parsers import JsonOutputParser
 
 
 from app.agents.state import AnalystState
-from app.config import visualizer_llm as llm
+from app.config import get_visualizer_llm
 from app.prompts import VISUALIZER_PROMPT
 
 
@@ -19,7 +19,7 @@ async def visualize_data(state: AnalystState) -> dict:
 
     prompt = VISUALIZER_PROMPT
 
-    chain = prompt | llm | JsonOutputParser()
+    chain = prompt | get_visualizer_llm() | JsonOutputParser()
     chart = chain.invoke({
         "query": query,
         "columns_meta": columns_meta,

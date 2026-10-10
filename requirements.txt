@@ -1,28 +1,23 @@
-# LangGraph + LangChain
-langgraph>=0.2.0
-langchain>=0.3.0
-langchain-anthropic>=0.2.0
-langchain-groq>=0.2.0
-langchain-openai>=0.2.0
-langsmith>=0.1.0
+# LLM orchestration
+langgraph==1.2.5
+langchain-core==1.4.7
+langchain-openai==1.3.0
+langchain-anthropic==1.4.6
 
 # Data
-pandas>=2.0.0
-numpy>=1.26.0
-openpyxl>=3.1.0          # Excel support
-python-multipart>=0.0.9  # file upload в FastAPI
+pandas==3.0.3
+numpy==2.4.6
 
 # Visualization
-plotly>=5.20.0
+plotly==6.8.0
 
 # Forecasting
-prophet>=1.1.5
-statsmodels>=0.14.0
+prophet==1.3.0
 
 # API
-fastapi>=0.115.0
-uvicorn>=0.30.0
-pydantic>=2.0.0
+fastapi==0.136.3
+uvicorn==0.49.0
+python-multipart==0.0.32
 
 # Utils
-python-dotenv>=1.0.0
+python-dotenv==1.2.2

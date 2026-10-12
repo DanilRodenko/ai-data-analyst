@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.graph import build_graph
@@ -12,10 +14,13 @@ app = FastAPI(
     version="0.1.0",
 )
 
+
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5500").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=allowed_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
